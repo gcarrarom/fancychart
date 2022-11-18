@@ -1,0 +1,5 @@
+image:
+  repo: gcarrarom/landing
+  tag: 0.0.0
+
+port: 80

@@ -1,0 +1,57 @@
+{{- $app_name := .Release.Name}}
+{{- $app_port := .Values.port }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $app_name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ $app_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $app_name }}
+    spec:
+      containers:
+      - name: {{ $app_name }}
+        image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
+        ports:
+        - containerPort: {{ $app_port }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  {{ $app_name }}
+spec:
+  selector:
+    app: {{ $app_name }}
+  type:  ClusterIP
+  ports:
+  - port:  {{ $app_port }}
+    targetPort:  {{ $app_port }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $app_name }}
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: {{ $app_name }}.fancywhale.ca
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ $app_name }}
+            port:
+              number: {{ $app_port }}
+  tls:
+  - hosts:
+    - {{ $app_name }}.fancywhale.ca
+    secretName: {{ $app_name }}-fancywhale-ca-tls
