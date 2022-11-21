@@ -48,7 +48,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: {{ if .Values.is_root }}{{ .Values.domain }}{{ else }}{{ $app_name }}.{{ .Values.domain }}{{ end }}
+  - host: {{ if .Values.url }}{{ .Values.url }}{{ else }}{{ $app_name }}.{{ .Values.domain }}{{ end }}
     http:
       paths:
       - path: /
@@ -60,5 +60,5 @@ spec:
               number: {{ $app_port }}
   tls:
   - hosts:
-    - {{ if .Values.is_root }}{{ .Values.domain }}{{ else }}{{ $app_name }}.{{ .Values.domain }}{{ end }}
-    secretName: {{ if .Values.is_root }}{{ .Values.domain | replace "." "-"}}{{ else }}{{ $app_name }}.{{ .Values.domain | replace "." "-"}}{{ end }}
+    - {{ if .Values.url }}{{ .Values.url }}{{ else }}{{ $app_name }}.{{ .Values.domain }}{{ end }}
+    secretName: {{ if .Values.url }}{{ .Values.url | replace "." "-" }}{{ else }}{{ $app_name }}.{{ .Values.domain | replace "." "-" }}{{ end }}

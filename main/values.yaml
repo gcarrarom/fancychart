@@ -7,5 +7,6 @@ port: 80
 env: []
 
 domain: fancywhale.ca
-is_root: false
+## Set the url value if you want to replace the entire hostname
+# url: something.fancywhale.ca
 clusterissuer: letsencrypt
