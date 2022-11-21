@@ -8,3 +8,4 @@ env: []
 
 domain: fancywhale.ca
 is_root: false
+clusterissuer: letsencrypt

@@ -44,7 +44,7 @@ kind: Ingress
 metadata:
   name: {{ $app_name }}
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt
+    cert-manager.io/cluster-issuer: {{ .Values.clusterissuer }}
 spec:
   ingressClassName: nginx
   rules:
