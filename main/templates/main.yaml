@@ -1,4 +1,4 @@
-{{- $app_name := .Release.Name}}
+{{- $app_name := .Release.Name }}
 {{- $app_port := .Values.port }}
 apiVersion: apps/v1
 kind: Deployment
