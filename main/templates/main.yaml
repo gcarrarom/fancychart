@@ -17,6 +17,13 @@ spec:
       containers:
       - name: {{ $app_name }}
         image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
+        {{- if (not len(.Values.env) 0) }}
+        env:
+        {{- range $key, $val := .Values.env }}
+        - name: {{$key}}
+          value: {{$val}}
+        {{- end }}
+        {{- end }}
         ports:
         - containerPort: {{ $app_port }}
 ---
@@ -41,7 +48,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: {{ $app_name }}.fancywhale.ca
+  - host: {{ $app_name }}.{{ .Values.domain}}
     http:
       paths:
       - path: /
@@ -53,5 +60,5 @@ spec:
               number: {{ $app_port }}
   tls:
   - hosts:
-    - {{ $app_name }}.fancywhale.ca
-    secretName: {{ $app_name }}-fancywhale-ca-tls
+    - {{ $app_name }}.{{ .Values.domain }}
+    secretName: {{ $app_name }}-{{ .Values.domain | replace "." "-"}}
