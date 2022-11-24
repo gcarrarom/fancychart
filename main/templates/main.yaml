@@ -61,4 +61,4 @@ spec:
   tls:
   - hosts:
     - {{ if .Values.url }}{{ .Values.url }}{{ else }}{{ $app_name }}.{{ .Values.domain }}{{ end }}
-    secretName: {{ if .Values.url }}{{ .Values.url | replace "." "-" }}{{ else }}{{ $app_name }}.{{ .Values.domain | replace "." "-" }}{{ end }}
+    secretName: {{ if .Values.url }}{{ .Values.url | replace "." "-" }}{{ else }}{{ $app_name }}-{{ .Values.domain | replace "." "-" }}{{ end }}
