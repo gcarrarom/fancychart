@@ -19,7 +19,7 @@ spec:
       {{- range $each := .Values.image.pullSecrets }}
       - {{ $each }}
       {{- end}}
-      - registry-fancywhale-ca
+      - name: registry-fancywhale-ca
       {{- end }}
       containers:
       - name: {{ $app_name }}
