@@ -52,6 +52,9 @@ metadata:
   name: {{ $app_name }}
   annotations:
     cert-manager.io/cluster-issuer: {{ .Values.clusterissuer }}
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote}}
+    {{- end }}
 spec:
   ingressClassName: nginx
   rules:

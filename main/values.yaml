@@ -11,3 +11,6 @@ domain: fancywhale.ca
 ## Set the url value if you want to replace the entire hostname
 # url: something.fancywhale.ca
 clusterissuer: letsencrypt
+
+ingress:
+  annotations: {}
