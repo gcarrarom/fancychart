@@ -14,6 +14,13 @@ spec:
       labels:
         app: {{ $app_name }}
     spec:
+      {{- if not (eq (len .Values.image.pullSecrets) 0) }}
+      imagePullSecrets:
+      {{- range $each := .Values.image.pullSecrets }}
+      - {{ $each }}
+      {{- end}}
+      - registry-fancywhale-ca
+      {{- end }}
       containers:
       - name: {{ $app_name }}
         image: {{ .Values.image.repo }}:{{ .Values.image.tag }}

@@ -1,6 +1,7 @@
 image:
   repo: gcarrarom/landing
   tag: 0.0.0
+  pullSecrets: []
 
 port: 80
 
