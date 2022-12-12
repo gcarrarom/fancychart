@@ -23,7 +23,7 @@ spec:
       containers:
       - name: {{ $app_name }}
         image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
-        {{- if or (not (eq (len .Values.env) 0) (not (eq (len .Values.envFromSecret) 0)}}
+        {{- if or (not (eq (len .Values.env) 0)) (not (eq (len .Values.envFromSecret) 0)) }}
         env:
         {{- range $key, $val := .Values.env }}
         - name: {{$key}}
