@@ -32,9 +32,9 @@ spec:
         {{- range $item := .Values.envFromSecret }}
         - name: {{$item.name}}
           valueFrom:
-          secretKeyRef:
-            name: {{$item.secretName}}
-            key: {{$item.key}}
+            secretKeyRef:
+              name: {{$item.secretName}}
+              key: {{$item.key}}
         {{- end}}
         {{- end }}
         ports:
