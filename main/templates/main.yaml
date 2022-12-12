@@ -23,12 +23,19 @@ spec:
       containers:
       - name: {{ $app_name }}
         image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
-        {{- if not (eq (len .Values.env) 0) }}
+        {{- if or (not (eq (len .Values.env) 0) (not (eq (len .Values.envFromSecret) 0)}}
         env:
         {{- range $key, $val := .Values.env }}
         - name: {{$key}}
           value: {{$val | quote}}
         {{- end }}
+        {{- range $item := .Values.envFromSecret }}
+        - name: {{$item.name}}
+          valueFrom:
+          secretKeyRef:
+            name: {{$item.secretName}}
+            key: {{$item.key}}
+        {{- end}}
         {{- end }}
         ports:
         - containerPort: {{ $app_port }}

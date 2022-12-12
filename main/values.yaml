@@ -7,6 +7,13 @@ port: 80
 
 env: []
 
+# Environment Variables from Secrets, can be set like this:
+# - name: "ENV_VAR" #name of the environment variable
+#   secretName: super-secret # Name of the kubernetes secret
+#   key: password # key of the secret to be used.
+envFromSecret: []
+
+
 domain: fancywhale.ca
 ## Set the url value if you want to replace the entire hostname
 # url: something.fancywhale.ca
