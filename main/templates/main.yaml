@@ -6,6 +6,10 @@ metadata:
   name: {{ $app_name }}
 spec:
   replicas: 1
+  {{- if .Values.recreate }}
+  strategy:
+    type: Recreate
+  {{- end }}
   selector:
     matchLabels:
       app: {{ $app_name }}
@@ -14,6 +18,14 @@ spec:
       labels:
         app: {{ $app_name }}
     spec:
+      {{- if not (eq (len .Values.volumes) 0) }}
+      volumes:
+        {{- range $each := .Values.volumes }}
+        - name: {{$each.name}}
+          persistentVolumeClaim:
+            claimName: {{$each.name}}
+        {{- end }}
+      {{- end }}
       {{- if not (eq (len .Values.image.pullSecrets) 0) }}
       imagePullSecrets:
       {{- range $each := .Values.image.pullSecrets }}
@@ -36,6 +48,13 @@ spec:
               name: {{$item.secretName}}
               key: {{$item.key}}
         {{- end}}
+        {{- end }}
+        {{- if not (eq (len .Values.volumes) 0) }}
+        volumeMounts:
+        {{- range $each := .Values.volumes }}
+        - mountPath: {{$each.path}}
+          name: {{$each.name}}
+        {{- end }}
         {{- end }}
         ports:
         - containerPort: {{ $app_port }}
