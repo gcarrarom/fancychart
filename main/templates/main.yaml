@@ -21,9 +21,15 @@ spec:
       {{- if not (eq (len .Values.volumes) 0) }}
       volumes:
         {{- range $each := .Values.volumes }}
+        {{- if $each.isNfs }}
+        nfs:
+          path: {{ $each.nfsPath }}
+          server: {{ $each.server }}
+        {{- else}}
         - name: {{$each.name}}
           persistentVolumeClaim:
             claimName: {{$each.name}}
+        {{- end }}
         {{- end }}
       {{- end }}
       {{- if not (eq (len .Values.image.pullSecrets) 0) }}

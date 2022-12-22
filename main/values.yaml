@@ -8,9 +8,12 @@ port: 80
 recreate: false
 env: []
 
-# Volumes to be mounted from PVCs like this:
+# Volumes to be mounted from PVCs like this: - defaults to pvc if isNfs = false
 # - name: vault-pvc # name of the PVC to be mounted
 #   path: /data # path where the pvc will be mounted at
+#   isNfs: true # wheter to connect using nfs or not
+#   nfsPath: /data # path to mount at for the NFS server
+#   server: some.server.com # nfs server
 volumes: []
 
 # Environment Variables from Secrets, can be set like this:
