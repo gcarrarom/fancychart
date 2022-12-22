@@ -34,3 +34,7 @@ ingress:
 
 service:
   enabled: true
+
+resources:
+  requests: {}
+  limits: {}

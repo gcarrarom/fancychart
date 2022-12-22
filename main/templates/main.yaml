@@ -42,6 +42,11 @@ spec:
       containers:
       - name: {{ $app_name }}
         image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
+        resources:
+        {{- range $key, $value := .Values.resources }}
+          {{$key}}:
+            {{ toYaml $value }}
+        {{- end }}
         {{- if or (not (eq (len .Values.env) 0)) (not (eq (len .Values.envFromSecret) 0)) }}
         envFrom:
         {{- range $item := .Values.envFromSecret }}
