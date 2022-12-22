@@ -22,9 +22,10 @@ spec:
       volumes:
         {{- range $each := .Values.volumes }}
         {{- if $each.isNfs }}
-        nfs:
-          path: {{ $each.nfsPath }}
-          server: {{ $each.server }}
+        - name: {{ $each.name }}
+          nfs:
+            path: {{ $each.nfsPath }}
+            server: {{ $each.server }}
         {{- else}}
         - name: {{$each.name}}
           persistentVolumeClaim:
