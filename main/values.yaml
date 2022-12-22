@@ -26,4 +26,8 @@ domain: fancywhale.ca
 clusterissuer: letsencrypt
 
 ingress:
+  enabled: true
   annotations: {}
+
+service:
+  enabled: true
