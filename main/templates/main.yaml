@@ -45,7 +45,9 @@ spec:
         resources:
         {{- range $key, $value := .Values.resources }}
           {{$key}}:
-            {{ toYaml $value }}
+          {{- range $sub_key, $sub_value := $value}}
+            {{$sub_key}}: {{$sub_value}}
+          {{- end}}
         {{- end }}
         {{- if or (not (eq (len .Values.env) 0)) (not (eq (len .Values.envFromSecret) 0)) }}
         envFrom:
