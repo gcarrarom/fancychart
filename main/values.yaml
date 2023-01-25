@@ -38,3 +38,19 @@ service:
 resources:
   requests: {}
   limits: {}
+
+###
+# This is where you can define your node selector. 
+# If you need to use GCP's node selector, you can use:
+# gcp: <computer-class>
+# Where computer class could be: "Scale-Out", "Balanced" or "General-purpose"
+nodeSelector:
+  enabled: false
+
+###
+# This is where you can define your Security Context settings
+# You can setup the fsgroup setting by using this:
+# fsgroup: <group ID>
+# Where you can set any group ID that you need.
+securityContext:
+  enabled: false

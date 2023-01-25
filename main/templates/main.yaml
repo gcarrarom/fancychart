@@ -18,6 +18,18 @@ spec:
       labels:
         app: {{ $app_name }}
     spec:
+      {{- if .Values.securityContext.enabled }}
+      securityContext:
+        {{- if .Values.securityContext.fsgroup }}
+        fsGroup: {{.Values.securityContext.fsgroup}}
+        {{- end}}
+      {{- end}}
+      {{- if .Values.nodeSelector.enabled }}
+      nodeSelector:
+        {{- if .Values.nodeSelector.gcp }}
+        cloud.google.com/compute-class: {{.Values.nodeSelector.gcp}}
+        {{- end}}
+      {{- end}}
       {{- if not (eq (len .Values.volumes) 0) }}
       volumes:
         {{- range $each := .Values.volumes }}
