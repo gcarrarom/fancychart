@@ -5,6 +5,9 @@ image:
 
 port: 80
 
+deployment:
+  enabled: true
+
 recreate: false
 env: []
 
@@ -34,6 +37,17 @@ ingress:
 
 service:
   enabled: true
+  protocol: TCP
+  # You can use ClusterIP or LoadBalancer Services
+  # If you use LoadBalancer services, you could set the static IP address using:
+  # loadBalancerIP: <ip address>
+  # Make sure to research how that's going to be allocated.
+  type: ClusterIP
+  # Extra ports if you need more than 1
+  # Example:
+  # - port: 80
+  #   protocol: UDP
+  ports: []
 
 resources:
   requests: {}

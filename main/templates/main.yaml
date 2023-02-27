@@ -1,5 +1,6 @@
 {{- $app_name := .Release.Name }}
 {{- $app_port := .Values.port }}
+{{- if .Values.deployment.enabled}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -93,6 +94,12 @@ spec:
         {{- end }}
         ports:
         - containerPort: {{ $app_port }}
+          protocol: {{.Values.service.protocol}}
+        {{- range $port := .Values.service.ports }}
+        - containerPort: {{ $port.port }}
+          protocol: {{default $port.protocol "TCP"}}
+        {{- end }}
+{{- end }}
 ---
 {{- if .Values.service.enabled }}
 kind: Service
@@ -102,10 +109,19 @@ metadata:
 spec:
   selector:
     app: {{ $app_name }}
-  type:  ClusterIP
+  type:  {{.Values.service.type}}
+  {{- if and (eq .Values.service.type "LoadBalancer") (.Values.service.loadBalancerIP) }}
+  loadBalancerIP: {{.Values.service.loadBalancerIP}}
+  {{- end }}
   ports:
   - port:  {{ $app_port }}
     targetPort:  {{ $app_port }}
+    protocol: {{.Values.service.protocol}}
+  {{- range $port := .Values.service.ports }}
+  - port: {{ $port.port }}
+    targetPort: {{ $port.port }}
+    protocol: {{default $port.protocol "TCP"}}
+  {{- end }}
 {{- end }}
 ---
 {{- if .Values.ingress.enabled }}
