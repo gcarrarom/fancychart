@@ -17,6 +17,9 @@ env: []
 #   isNfs: true # wheter to connect using nfs or not
 #   nfsPath: /data # path to mount at for the NFS server
 #   server: some.server.com # nfs server
+#   createPVC: false # Whether or not to create a PVC
+#   storageClassName: nfs-client
+#   size: 10G # size of the pvc to be created if createPVC = true
 volumes: []
 
 # Environment Variables from Secrets, can be set like this:
