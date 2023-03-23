@@ -16,8 +16,9 @@ recreate: false
 env: {}
 
 # Volumes to be mounted from PVCs like this: - defaults to pvc if isNfs = false
-# - name: vault-pvc # name of the PVC to be mounted
+# - name: vault-pvc # name of the PVC or secret to be mounted.
 #   path: /data # path where the pvc will be mounted at
+#   isSecret: false # Whether or not to use the name to attach the secret with the same name.
 #   isNfs: true # wheter to connect using nfs or not
 #   nfsPath: /data # path to mount at for the NFS server
 #   server: some.server.com # nfs server
