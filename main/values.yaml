@@ -5,11 +5,15 @@ image:
 
 port: 80
 
+## Name to be used on the resources created
+# Defaults to .Release.Name
+# name: 
+
 deployment:
   enabled: true
 
 recreate: false
-env: []
+env: {}
 
 # Volumes to be mounted from PVCs like this: - defaults to pvc if isNfs = false
 # - name: vault-pvc # name of the PVC to be mounted
@@ -35,8 +39,16 @@ domain: fancywhale.ca
 clusterissuer: letsencrypt
 
 ingress:
+  className: nginx
   enabled: true
   annotations: {}
+  ## Auth annotations should be the ones included for authentication only. 
+  # Those will be ignored on the noauth ingress to be created
+  # That will allow for endpoints without authentication.
+  authAnnotations: {}
+  # Paths where you don't want to use your external authentication
+  # This is usually interesting to use on status/health pages and some APIs
+  noauthPaths: []
 
 service:
   enabled: true

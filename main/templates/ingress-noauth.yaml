@@ -1,0 +1,32 @@
+{{- $app_name := default .Release.Name .Values.name }}
+{{- $app_port := .Values.port }}
+{{- if and .Values.ingress.enabled (gt (len .Values.ingress.noauthPaths) 0) }} 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $app_name }}-noauth
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.clusterissuer }}
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote}}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+  - host: {{ if .Values.url }}{{ .Values.url }}{{ else }}{{ $app_name }}.{{ .Values.domain }}{{ end }}
+    http:
+      paths:
+      {{- range $i, $val := .Values.ingress.noauthPaths }}
+      - path: {{ $val }}
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ $app_name }}
+            port:
+              number: {{ $app_port }}
+      {{- end }}
+  tls:
+  - hosts:
+    - {{ if .Values.url }}{{ .Values.url }}{{ else }}{{ $app_name }}.{{ .Values.domain }}{{ end }}
+    secretName: {{ if .Values.url }}{{ .Values.url | replace "." "-" }}{{ else }}{{ $app_name }}-{{ .Values.domain | replace "." "-" }}{{ end }}
+{{- end }}

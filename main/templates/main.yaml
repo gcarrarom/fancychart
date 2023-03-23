@@ -1,4 +1,4 @@
-{{- $app_name := .Release.Name }}
+{{- $app_name := default .Release.Name .Values.name }}
 {{- $app_port := .Values.port }}
 {{- if .Values.deployment.enabled}}
 apiVersion: apps/v1
@@ -134,8 +134,11 @@ metadata:
     {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote}}
     {{- end }}
+    {{- range $key, $value := .Values.ingress.authAnnotations }}
+    {{ $key }}: {{ $value | quote}}
+    {{- end }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.ingress.className }}
   rules:
   - host: {{ if .Values.url }}{{ .Values.url }}{{ else }}{{ $app_name }}.{{ .Values.domain }}{{ end }}
     http:

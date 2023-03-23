@@ -1,5 +1,6 @@
 {{- range $volume := .Values.volumes }}
 {{- if $volume.createPVC }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
