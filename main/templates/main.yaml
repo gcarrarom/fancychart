@@ -28,10 +28,10 @@ spec:
       {{- if .Values.nodeSelector.enabled }}
       nodeSelector:
         {{- if .Values.nodeSelector.gcp }}
-        cloud.google.com/compute-class: {{.Values.nodeSelector.gcp}}
+        cloud.google.com/compute-class: {{ .Values.nodeSelector.gcp | quote}}
         {{- end}}
         {{- range $key, $val := .Values.nodeSelector.labels }}
-        {{$key}}: {{$val}}
+        {{$key}}: {{$val | quote}}
         {{- end }}
       {{- end}}
       {{- if not (eq (len .Values.volumes) 0) }}
