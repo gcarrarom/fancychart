@@ -30,6 +30,9 @@ spec:
         {{- if .Values.nodeSelector.gcp }}
         cloud.google.com/compute-class: {{.Values.nodeSelector.gcp}}
         {{- end}}
+        {{- range $key, $val := .Values.nodeSelector.labels }}
+        {{$key}}: {{$val}}
+        {{- end }}
       {{- end}}
       {{- if not (eq (len .Values.volumes) 0) }}
       volumes:

@@ -75,7 +75,11 @@ resources:
 # gcp: <computer-class>
 # Where computer class could be: "Scale-Out", "Balanced" or "General-purpose"
 nodeSelector:
+  gcp: false
   enabled: false
+  labels: {}
+  # labels: 
+  #   disk: ssd
 
 ###
 # This is where you can define your Security Context settings
