@@ -94,8 +94,8 @@ securityContext:
 serviceAccount:
   enabled: false
   ## Role
-  role:
-    rules:
-    - apiGroups: [""]
-      resources: ["pods"]
-      verbs: ["get"]
+  #role:
+  #  rules:
+  #  - apiGroups: [""]
+  #    resources: ["pods"]
+  #    verbs: ["get"]
