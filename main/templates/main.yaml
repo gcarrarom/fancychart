@@ -19,9 +19,9 @@ spec:
       labels:
         app: {{ $app_name }}
     spec:
-      {{- if .Values.serviceAccount.enabled -}}
+      {{- if .Values.serviceAccount.enabled }}
       serviceAccountName: {{$app_name}}
-      {{- end -}}
+      {{- end }}
       {{- if .Values.securityContext.enabled }}
       securityContext:
         {{- if .Values.securityContext.fsgroup }}
