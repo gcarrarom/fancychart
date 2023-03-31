@@ -88,3 +88,8 @@ nodeSelector:
 # Where you can set any group ID that you need.
 securityContext:
   enabled: false
+
+###
+# Service account related values
+serviceAccount:
+  enabled: false
