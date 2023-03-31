@@ -93,3 +93,9 @@ securityContext:
 # Service account related values
 serviceAccount:
   enabled: false
+  ## Role
+  role:
+    rules:
+    - apiGroups: [""]
+      resources: ["pods"]
+      verbs: ["get"]
